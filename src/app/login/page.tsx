@@ -1,6 +1,4 @@
-'use client'
-import LoginPage from "src/components/Login";
+"use client";
+import LoginPage from "src/components/Authentication/Login";
 
-export default function Login(){
-return <LoginPage />
-}
+export default LoginPage;

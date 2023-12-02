@@ -13,12 +13,13 @@ export const Button = styled.button`
   padding: 8px 16px;
   text-align: center;
   width: 100%;
+  cursor: pointer;
 `;
 
 export const Input = styled.input`
   border: 1px solid #000;
   color: #00;
-  padding: 8px 16px;
+  padding: 8px;
   width: 100%;
   &:focus {
     outline: none;
