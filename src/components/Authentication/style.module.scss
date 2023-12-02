@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+  .left {
+    background: #19191a;
+    height: 100vh;
+    width: 50%;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  .right {
+    padding: 150px;
+    width: 50%;
+    h2 {
+      color: #19191a;
+      font-size: 32px;
+    }
+    form {
+      margin-top: 30px;
+      width: 100%;
+      display: grid;
+      gap: 20px;
+    }
+  }
+}
+
+.snippet {
+  width: 350px;
+  padding: 12px;
+  overflow-x: auto;
+  color: #fff;
+  background: #000;
+  position: relative;
+  .copyBtn {
+    position: absolute;
+    background: #fff;
+    top: 5px;
+    right: 5px;
+    color: #000;
+    padding: 6px;
+    font-size: 16px;
+    border-radius: 3px;
+  }
+}
