@@ -1,27 +1,35 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, FlexContainer, Input } from "../reusable";
 import style from "./style.module.scss";
 import Link from "next/link";
-import { useDID } from "src/components/utils/hooks";
+import { useRouter } from "next/navigation";
 
-//In progress
 export default function LoginPage() {
-  const userDID = useDID();
+  const router = useRouter();
+  const [did, setDid] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  console.log(userDID);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    window.localStorage.setItem("userDID", did);
+    router.push("/");
+  };
+
   return (
     <div className={style.wrapper}>
       <div className={style.left}></div>
       <div className={style.right}>
         <div className={style.container}>
           <h2>Login</h2>
-          <form>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <Input
               placeholder="Enter DID"
-              readOnly
-              //  onChange={(e) => setUserDid(e.target.value)}
+              value={did}
+              name={"did"}
+              onChange={(e) => setDid(e.target.value)}
             />
-            <Button>Login</Button>
+            <Button type="submit">{loading ? "Logging in" : "Login"} </Button>
             <p>
               Don't have a DID? <Link href={"/create-did"}>Create DID</Link>{" "}
             </p>

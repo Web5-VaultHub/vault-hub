@@ -9,12 +9,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function CreateDID() {
   const [userDID, setUserDID] = useState<string>("");
+  const [personal, setPersonal] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [profile, setProfile] = useState({
-    firstName: "",
-    lastName: "",
-  });
+  const [profile, setProfile] = useState({});
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfile({ ...profile, [name]: value });
@@ -56,18 +54,7 @@ export default function CreateDID() {
                 again
               </p>
             )}
-            {userDID ? (
-              <div className={style.snippet}>
-                <code>{userDID}</code>
-                <button
-                  className={style.copyBtn}
-                  type="button"
-                  onClick={() => navigator.clipboard.writeText(userDID)}
-                >
-                  Copy
-                </button>
-              </div>
-            ) : (
+            {personal ? (
               <>
                 <Input
                   type="text"
@@ -82,6 +69,17 @@ export default function CreateDID() {
                   name="lastName"
                   onChange={handleInputChange}
                   placeholder="Last name"
+                />
+                <Button type="submit">{loading ? "Creating" : "Create"}</Button>
+              </>
+            ) : (
+              <>
+                <Input
+                  type="text"
+                  value={profile.organizationName}
+                  name="organizationName"
+                  onChange={handleInputChange}
+                  placeholder="Organization name"
                 />
                 <Button type="submit">{loading ? "Creating" : "Create"}</Button>
               </>
