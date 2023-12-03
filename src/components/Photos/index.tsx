@@ -37,15 +37,8 @@ export default function Photos() {
         const data = await record.data.json();
         photoList.push(data);
       }
-      console.log(photoList);
       setPhotos(photoList);
 
-      /*   for (let record of records) {
-        const data = await record.data.json();
-        const list = { record, data, id: record.id };
-        console.log(list)
-       // setProfile(list);
-      }*/
     } catch (error) {
       console.log("Error retrieving data from DWN:", error);
     }
