@@ -1,0 +1,49 @@
+.checkPill {
+  display: block;
+  user-select: none;
+  width: 100%;
+
+  input {
+    opacity: 0;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &:checked ~ .checkMark {
+      border: 2px solid var(--black, #000);
+      background: var(--white, #fff);
+      &::after {
+        display: block;
+      }
+    }
+  }
+
+  .checkMark {
+    border-radius: 5px;
+    background: var(--gray-fa, #FAFAFA);
+    border: 2px solid #FAFAFA;
+    width: 100%;
+    padding: 25px 6.917px;
+    position: relative;
+    text-align: center;
+    text-transform: capitalize;
+    width: 100%;
+
+    &:after {
+      content: "";
+      display: none;
+    }
+  }
+}
+.inputWrapper{
+    width: 100%;
+    .inputLabel{
+        font-size: 18px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.50);
+        margin-bottom: 2px;
+        color: var(--black-second, #8B8B8B);
+    }
+}

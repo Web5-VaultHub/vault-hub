@@ -5,17 +5,20 @@ import style from "./style.module.scss";
 import Link from "next/link";
 import { Web5 } from "@web5/api";
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CheckPill from "../reusable/CheckPill";
 
 export default function CreateDID() {
+  const [didType, setDidType] = useState("personal");
   const [userDID, setUserDID] = useState<string>("");
   const [personal, setPersonal] = useState(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [profile, setProfile] = useState(
-    personal ? { firstName: "", lastName: "" } : { organizationName: "" }
+    didType == "personal"
+      ? { firstName: "", lastName: "" }
+      : { organizationName: "", adminname: "" }
   );
-  
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfile({ ...profile, [name]: value });
@@ -45,53 +48,93 @@ export default function CreateDID() {
   };
 
   return (
-    <div className={style.wrapper}>
-      <div className={style.left}></div>
-      <div className={style.right}>
-        <div className={style.container}>
-          <h2>Create DID</h2>
-          <form onSubmit={(e) => newDID(e)}>
-            {error && (
-              <p>
-                An error occured while generating your DID. <br /> Please try
-                again
-              </p>
-            )}
-            {personal ? (
-              <>
-                <Input
-                  type="text"
-                  value={profile.firstName}
-                  name="firstName"
-                  onChange={handleInputChange}
-                  placeholder="First name"
-                />
-                <Input
-                  type="text"
-                  value={profile.lastName}
-                  name="lastName"
-                  onChange={handleInputChange}
-                  placeholder="Last name"
-                />
-                <Button type="submit">{loading ? "Creating" : "Create"}</Button>
-              </>
-            ) : (
-              <>
-                <Input
-                  type="text"
-                  value={profile.organizationName}
-                  name="organizationName"
-                  onChange={handleInputChange}
-                  placeholder="Organization name"
-                />
-                <Button type="submit">{loading ? "Creating" : "Create"}</Button>
-              </>
-            )}
+    <div className={style.createDID}>
+      <div className={style.left}>
+        <form className={style.container} onSubmit={(e) => newDID(e)}>
+          <div className={style.title}>
+            <h1>Create DID</h1>
+            <img src="/icons/vault.png" />
+          </div>
+          <div className={style.selectWrapper}>
+            <div>
+              <CheckPill
+                name="didType"
+                label="Personal"
+                value="personal"
+                type="radio"
+                checked={didType == "personal"}
+                onChange={(e) => setDidType(e.target.value)}
+              />
+            </div>
+            <div>
+              <CheckPill
+                name="didType"
+                label="Organization"
+                value="organization"
+                type="radio"
+                checked={didType == "organization"}
+                onChange={(e) => setDidType(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {error && (
             <p>
-              Already have one? <Link href={"/login"}>Log in</Link>{" "}
+              An error occured while generating your DID. <br /> Please try
+              again
             </p>
-          </form>
-        </div>
+          )}
+          {didType == "personal" ? (
+            <>
+              <Input
+                label="First name"
+                type="text"
+                value={profile.firstName}
+                name="firstName"
+                onChange={handleInputChange}
+                placeholder="First name"
+              />
+              <Input
+                label="Last name"
+                type="text"
+                value={profile.lastName}
+                name="lastName"
+                onChange={handleInputChange}
+                placeholder="Last name"
+              />
+              <Button type="submit">{loading ? "Creating" : "Create"}</Button>
+            </>
+          ) : (
+            <>
+              <Input
+                label="Organization name"
+                type="text"
+                value={profile.organizationName}
+                name="organizationName"
+                onChange={handleInputChange}
+                placeholder="Organization name"
+              />
+              <Input
+                label="Admin name"
+                type="text"
+                value={profile.adminName}
+                name="adminnName"
+                onChange={handleInputChange}
+                placeholder="Full name"
+              />
+              <Button type="submit">{loading ? "Creating" : "Create"}</Button>
+            </>
+          )}
+          <p className={style.info}>
+            Already have a DID?{" "}
+            <Link href={"/login"} className={style.link}>
+              Log in
+            </Link>
+          </p>
+        </form>
+      </div>
+      <div className={style.right}>
+        <img src="/images/frame-303.png" />
       </div>
     </div>
   );

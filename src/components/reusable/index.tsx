@@ -1,45 +1,39 @@
 import styled, { css } from "styled-components";
-
-interface FlexContainerProps {
-  $center?: boolean;
-  $direction?: "row" | "column";
-  $dark?: boolean;
-}
-
+import style from "./style.module.scss";
 export const Button = styled.button`
-  background: transparent;
-  border: 1px solid #000;
-  color: #000;
-  padding: 8px 16px;
+  background: #000;
+  color: #fff;
+  padding: 25px 10px;
   text-align: center;
   width: 100%;
   cursor: pointer;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 20px;
+  border: none;
 `;
 
-export const Input = styled.input`
-  border: 1px solid #000;
-  color: #00;
-  padding: 8px;
+const InputStyle = styled.input`
+  border: none;
+  color: var(--gray-c-4, #c4c4c4);
+  border-radius: 10px;
+  background: var(--gray-fa, #fafafa);
+  padding: 25px 30px;
+  align-items: center;
   width: 100%;
+  &::placeholder {
+    color: var(--gray-c-4, #c4c4c4);
+  }
   &:focus {
     outline: none;
   }
 `;
 
-export const FlexContainer = styled.div<FlexContainerProps>`
-  display: flex;
-  height: 100%;
-  background: #fff;
-  align-items: center;
-  ${(props) =>
-    props.$direction &&
-    css`
-      flex-direction: ${props.$direction};
-    `}
-  ${(props) =>
-    props.$center &&
-    css`
-      justify-content: center;
-   
-    `}
-`;
+export const Input = ({ ...props }) => {
+  return (
+    <div className={style.inputWrappper}>
+      <label className={style.inputLabel} >{props.label} </label>
+      <InputStyle {...props} />
+    </div>
+  );
+};
