@@ -6,6 +6,7 @@ const useWeb5 = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
     const connectToWeb5 = async () => {
       try {
@@ -18,7 +19,6 @@ const useWeb5 = () => {
         setIsLoading(false);
       }
     };
-
     connectToWeb5();
   }, []);
 
@@ -35,7 +35,6 @@ export const useDID = () => {
   }, []);
   return userDID;
 };
-
 
 export const useProfile = (did) => {
   const [profile, setProfile] = useState({});

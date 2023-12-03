@@ -45,14 +45,14 @@ export default function UploadPhoto() {
           return;
         }
         const { record } = await web5.dwn.records.create({
-          data: { name: fileName, image: file },
+          data: { name: fileName, image: base64Image },
           message: {
             schema: "http://example.com/vaulthub-imagess",
             dataFormat: "application/json",
           },
         });
 
-        console.log(await record.data);
+        console.log(await record.data.json());
       };
       reader.readAsDataURL(file);
     } catch (error) {
