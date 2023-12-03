@@ -9,12 +9,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function CreateDID() {
   const [userDID, setUserDID] = useState<string>("");
-  const [personal, setPersonal] = useState(false);
+  const [personal, setPersonal] = useState(true);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
   const [profile, setProfile] = useState(
     personal ? { firstName: "", lastName: "" } : { organizationName: "" }
   );
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfile({ ...profile, [name]: value });
