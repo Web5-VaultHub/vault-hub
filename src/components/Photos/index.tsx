@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+"use client"
+
+import {  useEffect, useState } from "react";
 import useWeb5, { useDID, useProfile } from "../utils/hooks";
 import UploadPhoto from "./upload";
 import { Web5 } from "@web5/api";
-import style from "./style.module.scss"
+import style from "./style.module.scss";
 
 export default function Photos() {
   const did = useDID();
   // const { web5 } = useWeb5();
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState<any>();
 
   const retrievePhotos = async () => {
     try {
@@ -22,23 +24,24 @@ export default function Photos() {
           },
         },
       });
-      let recordId = records.map((record) => {
-        return record.id;
-      });
-
-      for (let i = 0; i < recordId.length; i++) {
-        let { record } = await web5.dwn.records.read({
-          message: {
-            filter: {
-              recordId: recordId[i],
-            },
-          },
+      if (records) {
+        let recordId = records.map((record) => {
+          return record.id;
         });
-        const data = await record.data.json();
-        photoList.push(data);
-      }
-      setPhotos(photoList);
 
+        for (let i = 0; i < recordId.length; i++) {
+          let { record } = await web5.dwn.records.read({
+            message: {
+              filter: {
+                recordId: recordId[i],
+              },
+            },
+          });
+          const data = await record.data.json();
+          photoList.push(data);
+        }
+        setPhotos(photoList);
+      }
     } catch (error) {
       console.log("Error retrieving data from DWN:", error);
     }
@@ -57,7 +60,7 @@ export default function Photos() {
         ) : (
           <div className={style.photosWrapper}>
             {photos.map((photo: any, index: number) => (
-              <div key={index} className={style.photo}  >
+              <div key={index} className={style.photo}>
                 <img alt="" src={photo.image} />
               </div>
             ))}
@@ -67,4 +70,3 @@ export default function Photos() {
     </div>
   );
 }
-
