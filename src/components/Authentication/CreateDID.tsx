@@ -16,7 +16,7 @@ export default function CreateDID() {
   const [profile, setProfile] = useState(
     didType == "personal"
       ? { firstName: "", lastName: "" }
-      : { organizationName: "", adminname: "" }
+      : { organizationName: "", adminName: "" }
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +63,9 @@ export default function CreateDID() {
                 value="personal"
                 type="radio"
                 checked={didType == "personal"}
-                onChange={(e) => setDidType(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setDidType(e.target.value)
+                }
               />
             </div>
             <div>
@@ -73,7 +75,9 @@ export default function CreateDID() {
                 value="organization"
                 type="radio"
                 checked={didType == "organization"}
-                onChange={(e) => setDidType(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setDidType(e.target.value)
+                }
               />
             </div>
           </div>

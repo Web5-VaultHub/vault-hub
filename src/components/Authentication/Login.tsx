@@ -35,7 +35,9 @@ export default function LoginPage() {
             placeholder="Enter DID"
             value={did}
             name={"did"}
-            onChange={(e) => setDid(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setDid(e.target.value)
+            }
           />
           <Button type="submit">{loading ? "Logging in" : "Login"} </Button>
           <p className={style.info}>
