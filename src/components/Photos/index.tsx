@@ -5,16 +5,17 @@ import useWeb5, { useDID, useProfile } from "../utils/hooks";
 import UploadPhoto from "./upload";
 import { Web5 } from "@web5/api/browser";
 import style from "./style.module.scss";
+import EmptyState from "../reusable/EmptyState";
 
 export default function Photos() {
   const did = useDID();
-
+  const { web5 } = useWeb5();
   const [photos, setPhotos] = useState<any>();
 
   const retrievePhotos = async () => {
     try {
       // @ts-ignore
-      const { web5 } = await Web5.connect();
+
       const photoList: any[] = [];
 
       const { records } = await web5.dwn.records.query({
@@ -28,7 +29,6 @@ export default function Photos() {
 
       if (records) {
         let recordId = records.map((record: any) => {
-          console.log(record.id)
           return record.id;
         });
 
@@ -52,19 +52,23 @@ export default function Photos() {
 
   useEffect(() => {
     retrievePhotos();
-  }, [retrievePhotos]);
+  }, [web5]);
 
   return (
     <div>
       <>
         <UploadPhoto />
         {!photos || photos.length < 0 ? (
-          <p>No photos</p>
+          <EmptyState
+            imgSrc="/images/gallery.svg"
+            infoText="You have not added any photos yet."
+            btnValue="Upload"
+          />
         ) : (
           <div className={style.photosWrapper}>
             {photos.map((photo: any, index: number) => (
               <div key={index} className={style.photo}>
-                <img alt="" src={photo.image} />
+                {photo.image ? <img alt="" src={photo.image} /> : null}
               </div>
             ))}
           </div>
