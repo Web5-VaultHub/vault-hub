@@ -1,18 +1,19 @@
-"use client"
+"use client";
 
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useWeb5, { useDID, useProfile } from "../utils/hooks";
 import UploadPhoto from "./upload";
-import { Web5 } from "@web5/api";
+import { Web5 } from "@web5/api/browser";
 import style from "./style.module.scss";
 
 export default function Photos() {
   const did = useDID();
-  // const { web5 } = useWeb5();
+
   const [photos, setPhotos] = useState<any>();
 
   const retrievePhotos = async () => {
     try {
+      // @ts-ignore
       const { web5 } = await Web5.connect();
       const photoList: any[] = [];
 
@@ -24,8 +25,10 @@ export default function Photos() {
           },
         },
       });
+
       if (records) {
-        let recordId = records.map((record) => {
+        let recordId = records.map((record: any) => {
+          console.log(record.id)
           return record.id;
         });
 

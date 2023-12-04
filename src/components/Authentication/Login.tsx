@@ -13,7 +13,7 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     window.localStorage.setItem("userDID", did);
-    router.push("/");
+    router.push("/files");
   };
 
   return (
