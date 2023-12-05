@@ -1,7 +1,30 @@
 import React from "react";
 
 const shapes = { round: "rounded-[5px]" } as const;
-const variants = {
+
+// const variants = {
+//   outline: {
+//     blue_gray_400: "border border-blue_gray-400 border-solid",
+//     gray_400: "border border-gray-400 border-solid",
+//     black_900: "border-2 border-black-900 border-solid",
+//   },
+//   fill: {
+//     white_A700: "bg-white-A700 text-black-900",
+//     gray_100: "bg-gray-100",
+//     gray_50: "bg-gray-50 text-gray-700",
+//     black_900: "bg-black-900 text-white-A700",
+//   },
+// } as const;
+
+// Add index signatures for each nested object
+interface Variant {
+  [key: string]: string;
+}
+
+const variants: {
+  outline: Variant;
+  fill: Variant;
+} = {
   outline: {
     blue_gray_400: "border border-blue_gray-400 border-solid",
     gray_400: "border border-gray-400 border-solid",
@@ -14,6 +37,7 @@ const variants = {
     black_900: "bg-black-900 text-white-A700",
   },
 } as const;
+
 const sizes = {
   xs: "p-2.5",
   sm: "p-[13px]",
@@ -53,9 +77,11 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
 }) => {
   return (
     <button
-      className={`${className} ${(shape && shapes[shape]) || ""} ${
-        (size && sizes[size]) || ""
-      } ${(variant && variants[variant]?.[color]) || ""}`}
+      className={`${className} ${
+        (shape && shapes[shape as keyof typeof shapes]) || ""
+      } ${(size && sizes[size as keyof typeof sizes]) || ""} ${
+        (variant && variants[variant]?.[color]) || ""
+      }`}
       {...restProps}
     >
       {!!leftIcon && leftIcon}
