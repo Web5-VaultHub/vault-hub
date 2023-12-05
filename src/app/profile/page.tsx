@@ -211,7 +211,6 @@ export default function Profile() {
                       DID
                     </Text>
                   </div>
-                  {/* <div className="bg-gray-50 flex md:flex-col flex-row gap-[6.17px] items-center justify-between max-w-[914px] px-10 sm:px-5 py-[30px] rounded-md w-full"> */}
                   <div className="flex md:flex-1 sm:flex-col flex-row gap-5 items-center justify-end w-[595px] md:w-full">
                     <Text
                       className="text-2xl md:text-[22px] text-gray-700 sm:text-xl w-auto"
@@ -224,7 +223,6 @@ export default function Profile() {
                       src="images/img_thumbsup_blue_gray_400.svg"
                       alt="thumbsup"
                     />
-                    {/* </div> */}
                   </div>
                 </div>
               </List>
