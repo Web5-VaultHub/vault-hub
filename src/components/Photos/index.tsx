@@ -51,7 +51,7 @@ export default function Photos() {
   };
 
   useEffect(() => {
-    retrievePhotos();
+   // retrievePhotos();
   }, [web5]);
 
   return (

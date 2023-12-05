@@ -5,8 +5,8 @@ import { useDID, useProfile } from "src/components/utils/hooks";
 
 export default function Home() {
   const userDid = useDID();
-  const profile = useProfile(userDid);
-  console.log(profile);
+ // const profile = useProfile(userDid);
+ // console.log(profile);
   return (
     <main className={styles.main}>
       <h1>HOME</h1>
