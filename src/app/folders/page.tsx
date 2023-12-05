@@ -1,13 +1,13 @@
 import Wrapper from "src/components/Wrapper";
+import EmptyState from "src/components/reusable/EmptyState";
 
 export default function MyFolders() {
   return (
     <Wrapper pageTitle={"My Folders"}>
-      <div>
-        <h3 className="text-2xl text-center font-bold">
-          Just testing Tailwind
-        </h3>
-      </div>
+      <EmptyState
+        imgSrc="/images/folder.png"
+        infoText="You have not created any folders yet."
+      />
     </Wrapper>
   );
 }

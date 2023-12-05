@@ -34,7 +34,7 @@
           stroke: var(--black, #000) !important;
           fill: #000 !important;
           color: #000 !important;
-          path{
+          path {
             stroke: var(--black, #000) !important;
             fill: #000 !important;
           }
@@ -50,8 +50,8 @@
 
 .mainSection {
   margin-left: 263px;
-  padding-top: 82px;
-  padding-left: 59px;
+  padding: 82px 60px;
+  padding-bottom: 20px;
   .pageTitle {
     font-size: 36px;
     font-weight: 700;

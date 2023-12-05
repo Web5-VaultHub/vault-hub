@@ -1,14 +1,15 @@
-.photosWrapper{
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(7, 1fr);
-    .photo{
-        height: 400px;
-        img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
+.photosWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  grid-template-columns: repeat(7, 1fr);
+  .photo {
+    height: 400px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
+  }
 }
