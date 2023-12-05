@@ -1,0 +1,60 @@
+.sidebar {
+  width: 263px;
+  border-right: 1px solid var(--gray-e-5, #e5e5e5);
+  background: var(--black, #000);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding-top: 82px;
+  .logoText {
+    font-weight: 700;
+    font-size: 32px;
+    color: #fff;
+    padding-left: 40px;
+  }
+  .navItems {
+    margin-top: 48px;
+    .navItem {
+      display: inline-block;
+      width: 100%;
+      padding: 20px 40px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      font-size: 18px;
+      font-weight: 500;
+
+      &:hover {
+        background: var(--white, #fff);
+        color: #000;
+        svg {
+          stroke: var(--black, #000) !important;
+          fill: #000 !important;
+          color: #000 !important;
+          path {
+            stroke: var(--black, #000) !important;
+            fill: #000 !important;
+          }
+        }
+      }
+    }
+    .active {
+      background: var(--white, #fff);
+      color: #000;
+    }
+  }
+}
+
+.mainSection {
+  margin-left: 263px;
+  padding: 82px 60px;
+  padding-bottom: 20px;
+  .pageTitle {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 16.5px;
+  }
+}

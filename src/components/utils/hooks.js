@@ -6,20 +6,26 @@ const useWeb5 = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
-    const connectToWeb5 = async () => {
+    const initWeb5 = async () => {
+      // @ts-ignore
+      //   const { Web5 } = await import("@web5/api/browser");
+
       try {
-        setIsLoading(true);
-        const { web5 } = await Web5.connect();
+        const { web5, did } = await Web5.connect({sync: '5s'});
         setWeb5(web5);
-      } catch (e) {
-        setError(e);
-      } finally {
-        setIsLoading(false);
+        setMyDid(did);
+        console.log(web5);
+        if (web5 && did) {
+          console.log("Web5 initialized");
+          // await configureProtocol(web5, did);
+        }
+      } catch (error) {
+        console.error("Error initializing Web5:", error);
       }
     };
-    connectToWeb5();
+
+    initWeb5();
   }, []);
 
   return { web5, isLoading, error };
@@ -38,11 +44,10 @@ export const useDID = () => {
 
 export const useProfile = (did) => {
   const [profile, setProfile] = useState({});
+  const { web5 } = useWeb5();
 
   const retrieveDWN = async () => {
     try {
-      const { web5 } = await Web5.connect();
-
       const { records } = await web5.dwn.records.query({
         from: did,
         message: {
@@ -64,7 +69,7 @@ export const useProfile = (did) => {
 
   useEffect(() => {
     retrieveDWN();
-  }, [retrieveDWN]);
+  }, []);
 
   return profile;
 };

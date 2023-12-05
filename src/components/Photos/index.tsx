@@ -1,17 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import useWeb5, { useDID, useProfile } from "../utils/hooks";
 import UploadPhoto from "./upload";
-import { Web5 } from "@web5/api";
-import style from "./style.module.scss"
+import { Web5 } from "@web5/api/browser";
+import style from "./style.module.scss";
+import EmptyState from "../reusable/EmptyState";
 
 export default function Photos() {
   const did = useDID();
-  // const { web5 } = useWeb5();
-  const [photos, setPhotos] = useState([]);
+  const { web5 } = useWeb5();
+  const [photos, setPhotos] = useState<any>();
 
   const retrievePhotos = async () => {
     try {
-      const { web5 } = await Web5.connect();
+      // @ts-ignore
+
       const photoList: any[] = [];
 
       const { records } = await web5.dwn.records.query({
@@ -22,30 +26,25 @@ export default function Photos() {
           },
         },
       });
-      let recordId = records.map((record) => {
-        return record.id;
-      });
 
-      for (let i = 0; i < recordId.length; i++) {
-        let { record } = await web5.dwn.records.read({
-          message: {
-            filter: {
-              recordId: recordId[i],
-            },
-          },
+      if (records) {
+        let recordId = records.map((record: any) => {
+          return record.id;
         });
-        const data = await record.data.json();
-        photoList.push(data);
-      }
-      console.log(photoList);
-      setPhotos(photoList);
 
-      /*   for (let record of records) {
-        const data = await record.data.json();
-        const list = { record, data, id: record.id };
-        console.log(list)
-       // setProfile(list);
-      }*/
+        for (let i = 0; i < recordId.length; i++) {
+          let { record } = await web5.dwn.records.read({
+            message: {
+              filter: {
+                recordId: recordId[i],
+              },
+            },
+          });
+          const data = await record.data.json();
+          photoList.push(data);
+        }
+        setPhotos(photoList);
+      }
     } catch (error) {
       console.log("Error retrieving data from DWN:", error);
     }
@@ -53,19 +52,23 @@ export default function Photos() {
 
   useEffect(() => {
     retrievePhotos();
-  }, [retrievePhotos]);
+  }, [web5]);
 
   return (
     <div>
       <>
         <UploadPhoto />
         {!photos || photos.length < 0 ? (
-          <p>No photos</p>
+          <EmptyState
+            imgSrc="/images/gallery.svg"
+            infoText="You have not added any photos yet."
+            btnValue="Upload"
+          />
         ) : (
           <div className={style.photosWrapper}>
             {photos.map((photo: any, index: number) => (
-              <div key={index} className={style.photo}  >
-                <img alt="" src={photo.image} />
+              <div key={index} className={style.photo}>
+                {photo.image ? <img alt="" src={photo.image} /> : null}
               </div>
             ))}
           </div>
@@ -74,4 +77,3 @@ export default function Photos() {
     </div>
   );
 }
-
