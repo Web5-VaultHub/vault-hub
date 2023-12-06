@@ -1,7 +1,7 @@
 import React from "react";
 
-const shapes = { round: "rounded-[5px]" } as const;
-const variants = {
+const shapes: { [key: string]: string } = { round: "rounded-[5px]" };
+const variants: { [key: string]: { [key: string]: string } } = {
   outline: {
     blue_gray_400: "border border-blue_gray-400 border-solid",
     gray_400: "border border-gray-400 border-solid",
