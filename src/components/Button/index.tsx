@@ -14,6 +14,7 @@ const variants: { [key: string]: { [key: string]: string } } = {
     black_900: "bg-black-900 text-white-A700",
   },
 } as const;
+
 const sizes = {
   xs: "p-2.5",
   sm: "p-[13px]",
@@ -53,9 +54,11 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
 }) => {
   return (
     <button
-      className={`${className} ${(shape && shapes[shape]) || ""} ${
-        (size && sizes[size]) || ""
-      } ${(variant && variants[variant]?.[color]) || ""}`}
+      className={`${className} ${
+        (shape && shapes[shape as keyof typeof shapes]) || ""
+      } ${(size && sizes[size as keyof typeof sizes]) || ""} ${
+        (variant && variants[variant]?.[color]) || ""
+      }`}
       {...restProps}
     >
       {!!leftIcon && leftIcon}
