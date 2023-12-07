@@ -1,10 +1,11 @@
 "use client";
+import { Web5 } from "@web5/api";
 import { ChangeEvent, useState } from "react";
-import useWeb5, { useDID } from "../utils/hooks";
+// import useWeb5, { useDID } from "../utils/hooks";
 
 export default function UploadPhoto() {
-  const { web5 } = useWeb5();
-  const userDID = useDID();
+  //  const { web5 } = useWeb5();
+  // const userDID = useDID();
   const [base64Image, setBase64Image] = useState<any>();
 
   const imageUploadProtocol = {
@@ -38,6 +39,7 @@ export default function UploadPhoto() {
     const fileName = `IMG${currentDate}.${fileType}`;
 
     try {
+      const { web5 } = await Web5.connect();
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64Image = reader.result;
@@ -51,8 +53,7 @@ export default function UploadPhoto() {
             dataFormat: "application/json",
           },
         });
-
-        console.log(await record.data.json());
+        if (record) console.log(await record.data.json());
       };
       reader.readAsDataURL(file);
     } catch (error) {

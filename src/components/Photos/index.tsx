@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import useWeb5, { useDID, useProfile } from "../utils/hooks";
-import UploadPhoto from "./upload";
-import { Web5 } from "@web5/api/browser";
+import UploadPhoto from "./upload"
 import style from "./style.module.scss";
 import EmptyState from "../reusable/EmptyState";
 
