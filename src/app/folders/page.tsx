@@ -1,5 +1,5 @@
 import Wrapper from "src/components/Wrapper";
-import EmptyState from "src/components/reusable/EmptyState";
+import EmptyState from "../../components/reusable/EmptyState";
 
 export default function MyFolders() {
   return (

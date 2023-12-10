@@ -1,13 +1,11 @@
 "use client";
-import { Web5 } from "@web5/api";
 import { ChangeEvent, useState } from "react";
-// import useWeb5, { useDID } from "../utils/hooks";
+import style from "./style.module.scss";
+import useWeb5, { useDID } from "../utils/hooks";
 
-export default function UploadPhoto() {
-  //  const { web5 } = useWeb5();
+export default function UploadPhoto({ photos, setPhotos }: any) {
+  const { web5 } = useWeb5();
   // const userDID = useDID();
-  const [base64Image, setBase64Image] = useState<any>();
-
   const imageUploadProtocol = {
     protocol: "http://vaulthub.web5",
     published: false,
@@ -39,7 +37,6 @@ export default function UploadPhoto() {
     const fileName = `IMG${currentDate}.${fileType}`;
 
     try {
-      const { web5 } = await Web5.connect();
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64Image = reader.result;
@@ -53,6 +50,8 @@ export default function UploadPhoto() {
             dataFormat: "application/json",
           },
         });
+        const addPhoto = await record?.data.json();
+        setPhotos([...photos, addPhoto]);
         if (record) console.log(await record.data.json());
       };
       reader.readAsDataURL(file);
@@ -62,8 +61,10 @@ export default function UploadPhoto() {
   };
 
   return (
-    <div>
-      <input type="file" accept="image/*" onChange={handleUpload} />
+    <div className={style.modal}>
+      <div className={style.modalContent}>
+        <input type="file" accept="image/*" onChange={handleUpload} />
+      </div>
     </div>
   );
 }
