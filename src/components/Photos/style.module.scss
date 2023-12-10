@@ -12,15 +12,50 @@
     background: #fff;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1); // soft shadow
     position: relative;
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
-    }
+    overflow-y: visible;
+   // &:hover {
+   //   transform: translateY(-5px);
+   //   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+   // }
 
     img {
       width: 100%;
       display: block;
       height: auto;
+    }
+    .top {
+      position: absolute;
+      top: 12px;
+      width: 100%;
+      display: flex;
+      justify-content: right;
+    }
+    .dropdown {
+      right: 16px;
+      position: absolute;
+      top: 16px;
+      .dropdownContent {
+        background: var(--white, #fff);
+        box-shadow: 0px 10px 4px 0px rgba(0, 0, 0, 0.1);
+        min-width: 166px;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        right: 16px;
+        background-color: white;
+        z-index: 1000;
+        button {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 15px 20px;
+          gap: 10px;
+          img {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
     }
   }
 }
