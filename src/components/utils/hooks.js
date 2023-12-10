@@ -10,10 +10,11 @@ const useWeb5 = () => {
   const [did, setDid] = useState("");
   useEffect(() => {
     const initWeb5 = async () => {
+      setIsLoading(true)
       // @ts-ignore
       const { Web5 } = await import("@web5/api/browser");
       try {
-        const { web5, did } = await Web5.connect({ sync: "5s" });
+        const { web5, did } = await Web5.connect();
 
         setWeb5(web5);
         setDid(did);
@@ -22,7 +23,7 @@ const useWeb5 = () => {
           console.log("Web5 initialized");
         }
       } catch (error) {
-        console.error("Error initializing Web5:", error);
+        console.error("Error initializing Web5", error);
       }
     };
 

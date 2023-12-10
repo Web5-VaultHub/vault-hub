@@ -13,7 +13,6 @@ export default function CreateDID() {
   const { web5, did } = useWeb5();
   const [didType, setDidType] = useState("personal");
   const [userDID, setUserDID] = useState<string>("");
-  const [personal, setPersonal] = useState(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [profile, setProfile] = useState(
@@ -31,7 +30,6 @@ export default function CreateDID() {
     e.preventDefault();
     setLoading(true);
     try {
-    //  const { web5, did: newDID } = await Web5.connect();
       window.localStorage.setItem("userDID", did);
       const { record } = await web5.dwn.records.create({
         data: profile,

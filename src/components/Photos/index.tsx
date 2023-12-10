@@ -10,7 +10,7 @@ import { BeatLoader } from "react-spinners";
 export default function Photos() {
   const did = useDID();
   const { web5 } = useWeb5();
-  const [photos, setPhotos] = useState([{ name: "", image: "", recordId: "" }]);
+  const [photos, setPhotos] = useState<any[]>();
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState([false]);
 
