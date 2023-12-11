@@ -1,7 +1,6 @@
 import Wrapper from "src/components/Wrapper";
 import { Button, Img, Text } from "src/components";
 import { ReactNode } from "react";
-import { useProfile } from "src/components/utils/hooks";
 
 interface ProfileInfoProps {
   icon: string;
@@ -55,8 +54,6 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ icon, label, value }) => (
 );
 
 export default function Profile() {
-  const { web5 } = useProfile(localStorage.getItem("userDID"));
-  console.log(web5);
   return (
     <Wrapper>
       <div className="flex flex-1 flex-col items-start justify-start p-[20px] md:px-2 w-full">
