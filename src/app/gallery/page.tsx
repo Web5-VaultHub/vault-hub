@@ -1,4 +1,3 @@
-"use client";
 import Photos from "src/components/Photos";
 import Wrapper from "src/components/Wrapper";
 

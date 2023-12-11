@@ -9,7 +9,6 @@ import {
   SharedIcon,
 } from "../../../public/NavIcons";
 import style from "./style.module.scss";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function Sidebar() {

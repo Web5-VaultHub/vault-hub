@@ -1,37 +1,35 @@
+"use client";
+
 const { useEffect, useState } = require("react");
-import { Web5 } from "@web5/api";
 
 const useWeb5 = () => {
   const [web5, setWeb5] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [did, setDid] = useState("");
   useEffect(() => {
     const initWeb5 = async () => {
+      setIsLoading(true);
       // @ts-ignore
-      //   const { Web5 } = await import("@web5/api/browser");
-
+      const { Web5 } = await import("@web5/api/browser");
       try {
-        const { web5, did } = await Web5.connect({ sync: "5s" });
+        const { web5, did } = await Web5.connect();
+
         setWeb5(web5);
-        setMyDid(did);
-        console.log(web5);
+        setDid(did);
+
         if (web5 && did) {
           console.log("Web5 initialized");
-          // await configureProtocol(web5, did);
         }
       } catch (error) {
-        console.error("Error initializing Web5:", error);
+        console.error("Error initializing Web5", error);
       }
     };
 
     initWeb5();
   }, []);
-
-  return { web5, isLoading, error };
+  return { web5, did, isLoading, error };
 };
-
-export default useWeb5;
 
 export const useDID = () => {
   const [userDID, setUserDID] = useState("");
@@ -49,7 +47,7 @@ export const useProfile = (did) => {
   const retrieveDWN = async () => {
     try {
       const { records } = await web5.dwn.records.query({
-        from: did,
+        //  from: did,
         message: {
           filter: {
             schema: "http://example.com/user-profile-object",
@@ -73,3 +71,5 @@ export const useProfile = (did) => {
 
   return profile;
 };
+
+export default useWeb5;

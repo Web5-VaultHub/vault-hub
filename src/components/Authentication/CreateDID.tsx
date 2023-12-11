@@ -3,14 +3,16 @@
 import { Button, Input } from "../reusable";
 import style from "./style.module.scss";
 import Link from "next/link";
-import { Web5 } from "@web5/api";
 import React, { useState } from "react";
 import CheckPill from "../reusable/CheckPill";
+import { useRouter } from "next/navigation";
+import useWeb5 from "../utils/hooks";
 
 export default function CreateDID() {
+  const router = useRouter();
+  const { web5, did } = useWeb5();
   const [didType, setDidType] = useState("personal");
   const [userDID, setUserDID] = useState<string>("");
-  const [personal, setPersonal] = useState(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [profile, setProfile] = useState(
@@ -28,8 +30,7 @@ export default function CreateDID() {
     e.preventDefault();
     setLoading(true);
     try {
-      const { web5, did: newDID } = await Web5.connect();
-      window.localStorage.setItem("userDID", newDID);
+      window.localStorage.setItem("userDID", did);
       const { record } = await web5.dwn.records.create({
         data: profile,
         message: {
@@ -38,7 +39,7 @@ export default function CreateDID() {
         },
       });
       console.log(await record?.data.json());
-      setUserDID(newDID);
+      setUserDID(did);
       setLoading(false);
     } catch (error) {
       console.error("Error creating DID:", error);
