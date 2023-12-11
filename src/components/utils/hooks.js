@@ -2,7 +2,6 @@
 
 const { useEffect, useState } = require("react");
 
-
 const useWeb5 = () => {
   const [web5, setWeb5] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -10,7 +9,7 @@ const useWeb5 = () => {
   const [did, setDid] = useState("");
   useEffect(() => {
     const initWeb5 = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       // @ts-ignore
       const { Web5 } = await import("@web5/api/browser");
       try {
@@ -48,7 +47,7 @@ export const useProfile = (did) => {
   const retrieveDWN = async () => {
     try {
       const { records } = await web5.dwn.records.query({
-      //  from: did,
+        //  from: did,
         message: {
           filter: {
             schema: "http://example.com/user-profile-object",
@@ -72,6 +71,5 @@ export const useProfile = (did) => {
 
   return profile;
 };
-
 
 export default useWeb5;
