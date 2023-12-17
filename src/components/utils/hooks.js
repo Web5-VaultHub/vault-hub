@@ -2,7 +2,6 @@
 
 const { useEffect, useState } = require("react");
 
-
 const useWeb5 = () => {
   const [web5, setWeb5] = useState({});
   const [loading, setLoading] = useState(true);
@@ -46,7 +45,7 @@ export const useProfile = (did) => {
   const retrieveDWN = async () => {
     try {
       const { records } = await web5.dwn.records.query({
-      //  from: did,
+        //  from: did,
         message: {
           filter: {
             schema: "http://example.com/user-profile-object",
@@ -70,6 +69,5 @@ export const useProfile = (did) => {
 
   return profile;
 };
-
 
 export default useWeb5;
