@@ -22,8 +22,8 @@
 
   .checkMark {
     border-radius: 5px;
-    background: var(--gray-fa, #FAFAFA);
-    border: 2px solid #FAFAFA;
+    background: var(--gray-fa, #fafafa);
+    border: 2px solid #fafafa;
     width: 100%;
     padding: 25px 6.917px;
     position: relative;
@@ -37,15 +37,15 @@
     }
   }
 }
-.inputWrapper{
-    width: 100%;
-    .inputLabel{
-        font-size: 18px;
-        font-weight: 500;
-        color: rgba(0, 0, 0, 0.50);
-        margin-bottom: 2px;
-        color: var(--black-second, #8B8B8B);
-    }
+.inputWrapper {
+  width: 100%;
+  .inputLabel {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 2px;
+    color: var(--black-second, #8b8b8b);
+  }
 }
 
 .emptyContainer {
@@ -55,12 +55,16 @@
   height: calc(100vh - 170.7px);
   .content {
     text-align: center;
+    display: grid;
+    gap: 31px;
+    img{
+      margin: auto;
+    }
   }
   .infoText {
     color: var(--black-2, #9d9595);
     font-size: 24px;
     font-weight: 600;
-    margin-top: 31px;
   }
 
   .actionBtn {
@@ -71,7 +75,6 @@
     width: 229px;
     border: none;
     outline: none;
-    margin-top: 31px;
     font-size: 20px;
     font-weight: 600;
   }

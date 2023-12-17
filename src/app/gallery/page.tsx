@@ -1,10 +1,6 @@
-import Photos from "src/components/Photos";
+import Photos from "src/components/Gallery";
 import Wrapper from "src/components/Wrapper";
 
 export default function Gallery() {
-  return (
-    <Wrapper pageTitle="My Gallery" >
-      <Photos />
-    </Wrapper>
-  );
+  return <Photos />;
 }

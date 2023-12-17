@@ -1,16 +1,19 @@
 "use client";
-import { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import style from "./style.module.scss";
 import useWeb5 from "../utils/hooks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Modal from "../utils/Modal";
+import UploadButton from "../utils/UploadButton";
 
 interface WrapperProps {
   children?: ReactNode;
   pageTitle?: string;
   action?: string;
   newAction?: () => void;
+  upload?: boolean;
+  handleUpload?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function Wrapper({
@@ -18,6 +21,8 @@ export default function Wrapper({
   pageTitle,
   newAction,
   action,
+  upload,
+  handleUpload
 }: WrapperProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -29,7 +34,6 @@ export default function Wrapper({
     const showModal = Boolean(searchParams.get("new"));
     setShowModal(showModal);
   }, [searchParams.get("new")]);
-  console.log(showModal);
 
   const handleCloseModal = () => {
     router.replace(pathname);
@@ -37,26 +41,18 @@ export default function Wrapper({
   };
 
   useEffect(() => {
-    // if (!loading) !did ? router.replace("/create-did") : null;
+    if (!loading) !did ? router.replace("/create-did") : null;
   }, [loading, did]);
 
   return (
     <>
-      {showModal && <Modal closeModal={handleCloseModal}  did={did} />}
+      {showModal && <Modal closeModal={handleCloseModal} did={did} />}
       <main className={style.rowSection}>
         <Sidebar />
         <section className={style.mainSection}>
           <div className={style.header}>
             {pageTitle && <h3 className={style.pageTitle}>{pageTitle}</h3>}
-            {action == "uploadGallery" && (
-              <button
-                className={style.newBtn}
-                type="button"
-                onClick={newAction}
-              >
-                New
-              </button>
-            )}
+            {upload ? <UploadButton handleUpload={handleUpload} /> : null}
           </div>
           {children}
         </section>
