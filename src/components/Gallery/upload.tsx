@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from "react";
 import style from "./style.module.scss";
 import useWeb5, { useDID } from "../utils/hooks";
 
+
 export default function UploadPhoto({ photos, setPhotos }: any) {
   const { web5 } = useWeb5();
   // const userDID = useDID();
@@ -21,6 +22,7 @@ export default function UploadPhoto({ photos, setPhotos }: any) {
       },
     },
   };
+  
   const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (!files || files.length === 0) {
@@ -34,7 +36,7 @@ export default function UploadPhoto({ photos, setPhotos }: any) {
       .toISOString()
       .split("T")[0]
       .replace(/-/g, "");
-    const fileName = `IMG${currentDate}.${fileType}`;
+    const fileName = `IMG${currentDate}_${photos.length + 1}.${fileType}`;
 
     try {
       const reader = new FileReader();

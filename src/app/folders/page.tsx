@@ -9,6 +9,7 @@ export default function MyFolders() {
       <EmptyState
         imgSrc="/images/folder.png"
         infoText="You have not created any folders yet."
+        fileBtn={true}
       />
     </Wrapper>
   );

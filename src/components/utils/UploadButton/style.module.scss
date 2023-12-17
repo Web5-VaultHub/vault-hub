@@ -1,0 +1,25 @@
+.uploadBtnWrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+
+  .uploadBtn {
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    color: var(--white, #fff);
+    font-size: 20px;
+    font-weight: 600;
+    background: var(--black, #000);
+    width: 229px;
+    cursor: pointer;
+  }
+  input {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+}

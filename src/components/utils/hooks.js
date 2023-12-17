@@ -48,7 +48,7 @@ export const useProfile = (did) => {
         //  from: did,
         message: {
           filter: {
-            schema: "http://example.com/user-profile-object",
+            schema: "http://vaulthub.xyz/profile",
             dataFormat: "application/json",
           },
         },

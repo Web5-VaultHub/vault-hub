@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/Photos/index.tsx",
+    "src/components/Gallery/index.tsx",
     "src/components/utils/hooks.js"
   ],
   "exclude": ["node_modules"]

@@ -1,11 +1,12 @@
 "use client";
-
+import React, { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
 import useWeb5, { useDID, useProfile } from "../utils/hooks";
 import UploadPhoto from "./upload";
 import style from "./style.module.scss";
 import EmptyState from "../reusable/EmptyState";
 import { BeatLoader } from "react-spinners";
+import Wrapper from "../Wrapper";
 
 export default function Photos() {
   const did = useDID();
@@ -22,8 +23,6 @@ export default function Photos() {
     setOpen(open?.map((state, i) => (i === index ? !state : state)));
   };
 
-  console.log(loading);
-
   useEffect(() => {
     const retrievePhotos = async () => {
       setPageLoading(true);
@@ -33,7 +32,7 @@ export default function Photos() {
           from: did,
           message: {
             filter: {
-              schema: "http://example.com/vaulthub-images",
+              schema: "http://vaulthub.xyz/images",
               dataFormat: "application/json",
             },
           },
@@ -67,6 +66,42 @@ export default function Photos() {
     retrievePhotos();
   }, [loading, web5]);
 
+  const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (!files || files.length === 0) {
+      return;
+    }
+    const file = files[0];
+    const fileType = file.name.split(".").pop();
+
+    const currentDate = new Date()
+      .toISOString()
+      .split("T")[0]
+      .replace(/-/g, "");
+    const fileName = `IMG${currentDate}_${photos.length + 1}.${fileType}`;
+
+    try {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64Image = reader.result;
+        if (!base64Image) {
+          return;
+        }
+        const { record } = await web5.dwn.records.create({
+          data: { name: fileName, image: base64Image },
+          message: {
+            schema: "http://vaulthub.xyz/images",
+            dataFormat: "application/json",
+          },
+        });
+        const addPhoto = await record?.data.json();
+        setPhotos([...photos, addPhoto]);
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
   const handleDelete = async (recordId: string) => {
     try {
       await web5.dwn.records.delete({
@@ -79,18 +114,22 @@ export default function Photos() {
       console.error("Delete photo", error);
     }
   };
-  console.log(photos);
+
   return (
-    <div>
+    <Wrapper
+      pageTitle="Gallery"
+      upload={photos?.length == 0 ? false : true}
+      handleUpload={handleUpload}
+    >
       <>
-        <UploadPhoto photos={photos} setPhotos={setPhotos} />
         {loading ? (
           <BeatLoader size={15} color="#000" />
         ) : !photos || photos.length <= 0 ? (
           <EmptyState
             imgSrc="/images/gallery.svg"
             infoText="You have not added any photos yet."
-            btnValue="Upload"
+            fileBtn={true}
+            handleUpload={handleUpload}
           />
         ) : (
           <div className={style.photosWrapper}>
@@ -132,6 +171,6 @@ export default function Photos() {
           </div>
         )}
       </>
-    </div>
+    </Wrapper>
   );
 }

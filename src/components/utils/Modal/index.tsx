@@ -5,6 +5,7 @@ interface Modal {
   closeModal: () => void;
   did: string;
 }
+
 export default function Modal({ closeModal, did }: Modal) {
   const [copied, setCopied] = useState(false);
 
@@ -21,6 +22,7 @@ export default function Modal({ closeModal, did }: Modal) {
       }
     };
   }, [copied]);
+
   return (
     <div className={style.modalWrapper}>
       <div className={style.modalContent}>

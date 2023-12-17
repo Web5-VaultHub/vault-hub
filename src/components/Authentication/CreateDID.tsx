@@ -6,7 +6,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import CheckPill from "../reusable/CheckPill";
 import { useRouter } from "next/navigation";
-import useWeb5 from "../utils/hooks";
 
 export default function CreateDID() {
   const router = useRouter();
@@ -38,13 +37,13 @@ export default function CreateDID() {
         const { record } = await web5.dwn.records.create({
           data: profile,
           message: {
-            schema: "http://example.com/user-profile-object",
+            schema: "http://vaulthub.xyz/profile",
             dataFormat: "application/json",
           },
         });
         console.log(await record?.data.json());
         setUserDID(did);
-        router.replace(`/profile?new=${did}`);
+        router.replace(`/gallery?new=${did}`);
       }
       setLoading(false);
     } catch (error) {
