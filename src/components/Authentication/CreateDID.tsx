@@ -10,15 +10,14 @@ import useWeb5 from "../utils/hooks";
 
 export default function CreateDID() {
   const router = useRouter();
-  const { web5, did } = useWeb5();
   const [didType, setDidType] = useState("personal");
   const [userDID, setUserDID] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [profile, setProfile] = useState(
     didType == "personal"
-      ? { firstName: "", lastName: "" }
-      : { organizationName: "", adminName: "" }
+      ? { firstName: "", lastName: "", userType: "individual" }
+      : { organizationName: "", adminName: "", userType: "organization" }
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,17 +28,24 @@ export default function CreateDID() {
   const newDID = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    // @ts-ignore
+    const { Web5 } = await import("@web5/api/browser");
     try {
-      window.localStorage.setItem("userDID", did);
-      const { record } = await web5.dwn.records.create({
-        data: profile,
-        message: {
-          schema: "http://example.com/user-profile-object",
-          dataFormat: "application/json",
-        },
-      });
-      console.log(await record?.data.json());
-      setUserDID(did);
+      const { web5, did } = await Web5.connect();
+      if (web5 && did) {
+        setUserDID(did);
+        window.localStorage.setItem("userDID", userDID);
+        const { record } = await web5.dwn.records.create({
+          data: profile,
+          message: {
+            schema: "http://example.com/user-profile-object",
+            dataFormat: "application/json",
+          },
+        });
+        console.log(await record?.data.json());
+        setUserDID(did);
+        router.replace(`/profile?new=${did}`);
+      }
       setLoading(false);
     } catch (error) {
       console.error("Error creating DID:", error);

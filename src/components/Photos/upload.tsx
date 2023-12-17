@@ -46,13 +46,12 @@ export default function UploadPhoto({ photos, setPhotos }: any) {
         const { record } = await web5.dwn.records.create({
           data: { name: fileName, image: base64Image },
           message: {
-            schema: "http://example.com/vaulthub-imagess",
+            schema: "http://example.com/vaulthub-images",
             dataFormat: "application/json",
           },
         });
         const addPhoto = await record?.data.json();
-       // setPhotos([...photos, addPhoto]);
-        if (record) console.log(await record.data.json());
+        setPhotos([...photos, addPhoto]);
       };
       reader.readAsDataURL(file);
     } catch (error) {
@@ -63,6 +62,7 @@ export default function UploadPhoto({ photos, setPhotos }: any) {
   return (
     <div className={style.modal}>
       <div className={style.modalContent}>
+        <div className={style.title}>Upload</div>
         <input type="file" accept="image/*" onChange={handleUpload} />
       </div>
     </div>
