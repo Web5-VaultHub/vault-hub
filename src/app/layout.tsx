@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "./globals.css";
+import React, { createContext } from "react";
 
 const raleway = Raleway({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Vault Hub",
-  description: "App to keep your data shared securely using Web5",
+  title: "VaultHub",
+  description: "Securely manage your data",
 };
 
 export default function RootLayout({
