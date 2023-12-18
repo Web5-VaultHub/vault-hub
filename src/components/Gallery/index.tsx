@@ -78,7 +78,9 @@ export default function Photos() {
       .toISOString()
       .split("T")[0]
       .replace(/-/g, "");
-    const fileName = `IMG${currentDate}_${photos.length + 1}.${fileType}`;
+    const fileName = `IMG${currentDate}_${
+      photos ? photos.length + 1 : 1
+    }.${fileType}`;
 
     try {
       const reader = new FileReader();
@@ -95,7 +97,7 @@ export default function Photos() {
           },
         });
         const addPhoto = await record?.data.json();
-        setPhotos([...photos, addPhoto]);
+        if (photos) setPhotos([...photos, addPhoto]);
       };
       reader.readAsDataURL(file);
     } catch (error) {
